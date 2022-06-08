@@ -33,15 +33,17 @@ def split(data_dir):
     if os.path.exists(train_sets) == False:
         os.makedirs(train_sets)
         
-    test_sets = os.path.join(data_dir,'test')
-    if os.path.exists(test_sets) == False:
-        os.makedirs(train_sets)
+    #test_sets = os.path.join(data_dir,'test')
+    #if os.path.exists(test_sets) == False:
+    #   os.makedirs(test_sets)
                           
     
     files = [filename for filename in glob.glob(f'{data_dir}/*.tfrecord')]
     np.random.shuffle(files)
-    train,val,test = np.split(files, [int(.8*len(files)), int(.2*len(files))])
- 
+    train,val = np.split(files, [int(0.8*len(files))])
+    print(train)
+    print(val)
+  
     
     for t in train:
         shutil.move(t,train_sets)
@@ -49,8 +51,8 @@ def split(data_dir):
     for v in val:
         shutil.move(v,val_sets)
         
-    for t in test:
-        shutil.move(t,test_sets)
+    #for t in test:
+    #    shutil.move(t,test_sets)
                  
 if __name__ == "__main__": 
     parser = argparse.ArgumentParser(description='Split data into training / validation / testing')
