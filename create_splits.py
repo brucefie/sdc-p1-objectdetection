@@ -21,8 +21,10 @@ def split(data_dir):
     print("Path written by the user: {} ".format(data_dir))
     
     from_path = data_dir + '/waymo/training_and_validation'
+    print("From path: {}".format(from_path))
     to_path = data_dir + '/waymo/'
-            
+    print("To path: {}".format(to_path))
+    
     val_dir = os.path.join(from_path , to_path + 'val')
     if os.path.exists(val_dir) == False:
         os.makedirs(val_dir)
@@ -30,8 +32,12 @@ def split(data_dir):
     train_dir = os.path.join(from_path , to_path + 'train')
     if os.path.exists(train_dir) == False:
         os.makedirs(train_dir)
+        
+    test_dir = os.path.join(from_path , to_path + 'test')
+    if os.path.exists(test_dir) == False:
+        os.makedirs(test_dir)
    
-    dataset = [filename for filename in glob.glob(f'{to_path}/*.tfrecord')]
+    dataset = [filename for filename in glob.glob(f'{from_path}/*.tfrecord')]
     print("Number of files: {}".format(len(dataset)))
     np.random.shuffle(dataset) #organize the list
     
